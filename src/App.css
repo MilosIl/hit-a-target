@@ -1,0 +1,64 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.container {
+  background: #bbb;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.target-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2em;
+}
+h1 {
+  font-size: 3rem;
+  font-weight: bold;
+}
+.difficulty {
+  font-size: 1.2em;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-block: 1em;
+}
+
+.square {
+  --width: 8em;
+  background: green;
+  width: var(--width);
+  height: var(--width);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select:none;
+}
+.target {
+  --width: 8em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: red;
+  border-radius: 50%;
+  width: var(--width);
+  height: var(--width);
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+button {
+  padding: 0.5em 1em;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-radius: 1em;
+  outline:none;
+  border:none;
+}
+button:hover{
+  background:green;
+  color:white;
+}
