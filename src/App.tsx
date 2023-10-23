@@ -1,53 +1,67 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 
-import Square from "./Components/Square";
-import Target from "./Components/Target";
 function App() {
-
   const [target, setTarget] = useState<boolean[]>(new Array(9).fill(false));
   const [score, setScore] = useState<number>(0);
   const [mode, setMode] = useState(1000);
-  function setMoleVisibility(index: number, isVisible: boolean) {
+  const [isGameOver, setIsGameOver] = useState<boolean>(false);
+
+  function setTargetVisibility(index: number, isVisible: boolean) {
     setTarget((curTarget) => {
-      const newtarget = [...curTarget];
-      newtarget[index] = isVisible;
-      return newtarget;
+      const newTarget = [...curTarget];
+      newTarget[index] = isVisible;
+      return newTarget;
     });
   }
-  function changeMode(speed: number) {
-    setMode(speed)
-    return speed;
+
+  function handleStopGame() {
+    setIsGameOver(!isGameOver);
+    if (isGameOver) {
+      setScore(0);
+    }
+  }
+  function changeMode(speed: number, size: string) {
+    document.documentElement.style.setProperty("--width-target", size);
+    setMode(speed);
+    return { speed, size };
   }
 
   function hitTarget(index: number) {
     if (!target[index]) return;
-    setMoleVisibility(index, false);
+    setTargetVisibility(index, false);
     setScore((score) => score + 1);
   }
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const randomIndex = Math.floor(Math.random() * target.length);
-      setMoleVisibility(randomIndex, true);
+      let randomIndex = Math.floor(Math.random() * target.length);
+      if (isGameOver) {
+        return (randomIndex = 0);
+      }
+      setTargetVisibility(randomIndex, true);
       setTimeout(() => {
-        setMoleVisibility(randomIndex, false);
+        setTargetVisibility(randomIndex, false);
       }, mode);
     }, 1000);
     return () => {
       clearInterval(interval);
     };
-  }, [target, mode]);
+  }, [target, mode, isGameOver]);
 
   return (
     <div className="container">
-      <h1>Score: {score}</h1>
-
+      <div className="score">
+        <button onClick={() => handleStopGame()}>
+          {!isGameOver ? "stop game" : "reset game"}
+        </button>
+        {isGameOver ? <p className="title">Score: {score}</p> : ""}
+      </div>
       <div className="difficulty">
         Set difficulty:
-        <button onClick={() => changeMode(800)}>easy</button>
-        <button onClick={() => changeMode(500)}>medium</button>
-        <button onClick={() => changeMode(300)}>hard</button>
+        <button onClick={() => changeMode(800, "8em")}>easy</button>
+        <button onClick={() => changeMode(600, "5em")}>medium</button>
+        <button onClick={() => changeMode(350, "2.5em")}>hard</button>
       </div>
       <div className="target-container">
         {target.map((isTarget, index) => {
@@ -56,8 +70,9 @@ function App() {
               onClick={() => {
                 hitTarget(index);
               }}
+              className={isTarget ? "target" : "square"}
               key={index}>
-              {isTarget ? <Target /> : <Square />}
+              {isTarget ? "hit" : ""}
             </div>
           );
         })}
