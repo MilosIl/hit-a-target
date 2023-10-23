@@ -18,9 +18,7 @@ function App() {
   function StartGame() {
     setIsGameOver(true);
     setMaxScore(0);
-    if (isGameOver) {
-      setScore(0);
-    }
+    setScore(0);
   }
 
   function changeMode(speed: number, size: string) {

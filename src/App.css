@@ -35,6 +35,7 @@
   grid-template-columns: repeat(3, 1fr);
   place-items: center;
   gap: 2em;
+  user-select: none;
 }
 
 .title {
@@ -60,7 +61,7 @@ button:focus-within {
   --width: 8em;
   width: var(--width);
   aspect-ratio: 1;
-  user-select: none;
+  
 }
 .target {
   width: var(--width-target);
