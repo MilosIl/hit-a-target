@@ -68,9 +68,9 @@ function App() {
       </div>
       <div className="difficulty">
         Set difficulty:
-        <button onClick={() => changeMode(800, "8em")}>easy</button>
-        <button onClick={() => changeMode(600, "5em")}>medium</button>
-        <button onClick={() => changeMode(400, "3em")}>hard</button>
+        <button onClick={() => changeMode(700, "6.5em")}>easy</button>
+        <button onClick={() => changeMode(550, "5em")}>medium</button>
+        <button onClick={() => changeMode(450, "3.5em")}>hard</button>
       </div>
       <div className="target-container">
         {target.map((isTarget, index) => {
